@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Calculator</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        form {
+            text-align: -webkit-center;
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        input[type="number"], input[type="radio"] {
+            margin: 5px;
+            background-color: #333;
+            border: 1px solid #555;
+            color: #e0e0e0;
+            padding: 5px;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #6200ea;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #3700b3;
+        }
+        #lblResult {
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<form id="healthForm">
+    <h2>Health Calculator</h2>
+    <fieldset>
+        <legend>Gender</legend>
+        <input type="radio" id="genderMale" name="gender" value="masc" checked> Male<br>
+        <input type="radio" id="genderFemale" name="gender" value="fem"> Female
+    </fieldset>
+    <br>
+    Age:<br>
+    <input type="number" id="age" value="20"><br>
+    Height (cm):<br>
+    <input type="number" id="height" value="180"><br>
+    Weight (kg):<br>
+    <input type="number" id="weight" value="80"><br>
+   <center></center> <button type="button" onclick="calculateHealth()">Calculate</button>
+</form>
+
+<p id="lblResult">Results will appear here.</p>
+
+<script>
+    function calculateHealth() {
+        // BMR Calculation
+        var age = parseFloat(document.getElementById("age").value);
+        var gender = document.querySelector('input[name="gender"]:checked').value;
+        var height = parseFloat(document.getElementById("height").value);
+        var weight = parseFloat(document.getElementById("weight").value);
+        var bmr;
+
+        if (gender == "masc") {
+            bmr = 66.5 + (13.75 * weight) + (5.003 * height) - (6.755 * age);
+        } else {
+            bmr = 655.1 + (9.563 * weight) + (1.850 * height) - (4.676 * age);
+        }
+
+        // BMI Calculation
+        var heightInMeters = height / 100;
+        var bmi = weight / (heightInMeters * heightInMeters);
+
+        // Update Results
+        var resultText = `BMR: ${bmr.toFixed(2)} kcal/day<br>BMI: ${bmi.toFixed(2)}`;
+        document.getElementById('lblResult').innerHTML = resultText;
+    }
+</script>
+
+</body>
+</html>
